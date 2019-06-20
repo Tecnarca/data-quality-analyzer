@@ -1,20 +1,20 @@
 # Data Quality Analyzer
 
-## Abstract
+### Abstract
 This document contains a brief description of the main functionalities, the user interface and a mockup of the software that we want to implement. Other features may be added or reworked in the implementation phase, but none will be removed. 
 
-## Domain Problem
+### Domain Problem
 We have a large amount of data generated from a data stream of a transport company. In it there are informations regarding each validated ticket, on which bus and on which line.
 The goal is to analyze the quality of this dataset and make some analysis on it and comparisons on portions of it.
 
-## Scope
+### Scope
 We want to give users the opportunity to analyze these datasets based on their data quality dimensions and to make queries based on dataset attributes. The entire amount of data will be grouped in different datasets per day or week.
 
 Additionaly, since the dataset is almost perfect, it will be "dirtied" in different ways on the different groups in order to analyze more cases of data quality problems.
 
 ---
 
-## Functionalities
+### Functionalities
 
 The user can choose one of the provided dataset he wants to analyze and build a query for it. Upon selecting a dataset, the application will profile it and plot some informations to the user in order to provide a first understanding of what the dataset is about. 
 
@@ -50,7 +50,6 @@ All queries can be freely combined with each other.
 
 ##### Compare Requirements
 - The profiling information will be visible for both selected datasets
-- The user can perform a query to show the profiling of a portion of the datasets
 - The stats of the dataset with higher quality will be highlited in some way (either by color or direct comparison)
 
 ##### Other Functionalities
