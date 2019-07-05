@@ -1,0 +1,29 @@
+dirtying the dataset:
+> randomly create missing values
+> change randomly date format
+> write wrong hour,day or minute (like 11:61)
+> create dict of first two columns and write wrong line codes or line names
+> create dict of veichles codes and write inexistent vehicles codes
+> write random letters inside CC codes
+> create completeness, consistency and timeliness as columns
+
+profiling the dataset:
+> take pandas-profiler
+> remodel the templates (to fit in the application)
+
+dataset querying:
+> send a query to spark
+> return the result
+> function for query 'portions' of data
+> convert data result in csv
+
+WebUI:
+> hierarchy
+> template
+> dataset list on the page side
+> query form
+> download CSV button
+> query results
+> profiling button
+> profiling show
+> compare page
