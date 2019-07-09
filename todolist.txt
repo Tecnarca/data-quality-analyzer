@@ -2,20 +2,23 @@ dirtying the dataset:
 > randomly create missing values
 > change randomly date format
 > write wrong hour,day or minute (like 11:61)
-> create dict of first two columns and write wrong line codes or line names
-> create dict of veichles codes and write inexistent vehicles codes
+> create dict of first two columns [FATTO di un file]
+> and write wrong line codes or line names
+> create dict of veichles codes and write inexistent vehicles codes[VEDERE bodice per dictionary Delle prime due colonne]
 > write random letters inside CC codes
-> create completeness, consistency and timeliness as columns
+> create completeness, [FATTO]
+>> consistency [check delle prime due collane FATTO, MANCA il resto delle colonne]
+>>> and timeliness as columns
 
 profiling the dataset:
-> take pandas-profiler
+> take pandas-profiler [c'è Pyspark-profiler, CONTROLLARE che vada bene]
 > remodel the templates (to fit in the application)
 
 dataset querying:
-> send a query to spark
-> return the result
+> send a query to spark [FATTO in notebook, ADATTARLO per interfaccia]
+> return the result [VEDERE punto sopra]
 > function for query 'portions' of data
-> convert data result in csv
+> convert data result in csv [FATTO in notebook, ADATTARLO per interfaccia]
 
 WebUI:
 > hierarchy
