@@ -1,32 +1,31 @@
 dirtying the dataset:
-> randomly create missing values
-> change randomly date format
-> write wrong hour,day or minute (like 11:61)
-> create dict of first two columns [FATTO di un file]
-> and write wrong line codes or line names
-> create dict of veichles codes and write inexistent vehicles codes[VEDERE bodice per dictionary Delle prime due colonne]
-> write random letters inside CC codes
-> create completeness, [FATTO]
->> consistency [check delle prime due collane FATTO, MANCA il resto delle colonne]
->>> and timeliness as columns
+> randomly create missing values [DONE]
+> change randomly date format [DONE]
+> write wrong hour,day or minute (like 11:61) [DONE]
+> create dict of first two columns [DONE]
+> and write wrong line codes or line names [DONE]
+> create dict of veichles codes and write inexistent vehicles codes[DONE]
+> write random letters inside CC codes [DONE]
+> create completeness [FATTO]
+>> consistency [DONE]
+>>> and timeliness as columns [DONE]
 
 profiling the dataset:
-> take pandas-profiler [c'è Pyspark-profiler, CONTROLLARE che vada bene]
-> remodel the templates (to fit in the application)
+> take pandas-profiler [DONE]
+> remodel the templates (to fit in the application) [not yet done the edits for style]
 
 dataset querying:
-> send a query to spark [FATTO in notebook, ADATTARLO per interfaccia]
-> return the result [VEDERE punto sopra]
+> send a query to spark [DONE]
+> return the result [DONE]
+> convert data result in csv [DONE]
 > function for query 'portions' of data
-> convert data result in csv [FATTO in notebook, ADATTARLO per interfaccia]
 
 WebUI:
-> hierarchy
-> template
-> dataset list on the page side
-> query form
-> download CSV button
-> query results
-> profiling button
-> profiling show
-> compare page
+> hierarchy [DONE]
+> template 
+> dataset list on the page side [missing style]
+> query form [DONE]
+> download CSV button [DONE]
+> query results [missing style]
+> profiling button [missing javascript]
+> compare page [DONE]
