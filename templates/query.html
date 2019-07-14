@@ -2,8 +2,32 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Dataset Comparison</title>
+    <title>Dataset Querying</title>
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+    <style>
+.loader {
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 40px;
+  height: 40px;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+</style>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
           integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
@@ -15,10 +39,34 @@
               $('[data-toggle="tooltip"]').tooltip()
         })
     </script>
-</head>
-<body>
 
-  Query a dataset<br/><br/>
+
+{% if pdf is defined %}
+<script>
+function loadProfiles() {
+  var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      document.getElementById("report").innerHTML = this.responseText;
+      showPage();
+    } };
+    xhttp.open("POST", "profileQuery", true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send("query={{query}}&day={{day}}");
+}
+
+function showPage() {
+  document.getElementById("loader").style.display = "none";
+  document.getElementById("report").style.display = "block";
+}
+</script>
+{% endif %}
+</head>
+{%if pdf is defined%}
+<body onload="loadProfiles()">
+{%else%}
+<body>
+{%endif%}
   <form action="query" method="POST">
     Select a dataset: <br/>
     
@@ -27,13 +75,17 @@
     {% endfor %}
     <br/>
     Seleziona gli attributi da visualizzare:<br/>
-    {% for attr in attrs %}
+    {% for attr in attrs%}
     <input type="checkbox" name="s{{attr}}" value="{{attr}}">{{attr}}
     {% endfor %}
     <br/>
     Restituisci solo le tuple con:<br/>
     {% for attr in attrs %}
+    {% if attr in ['COMPLETENESS', 'CONSISTENCY', 'CONFORMITY'] %}
+    {{attr}} >= <input type="text" name="w{{attr}}"><br/>
+    {% else %}
     {{attr}} = <input type="text" name="w{{attr}}"><br/>
+    {% endif %}
     {% endfor %}
     Raggruppa per:<br/>
     {% for attr in attrs %}
@@ -50,12 +102,12 @@
     <input type="checkbox" name="h{{attr}}" value="{{attr}}">{{attr}}
     {% endfor %}
     <br/>
-    <input type="submit" name="form1" value="Query">
+    <input type="submit" name="form1" value="Query" class='btn btn-default'>
   </form>
   
-  <br/><br/><br/><br/><br/>
+  <br/><br/>
 
-  [ADVANCED OPTION] Build a custom query<br/><br/>
+  [ADVANCED OPTION] Build a custom query<br/>
     <form action="query" method="POST">
     Select a dataset:
     
@@ -65,30 +117,81 @@
     <br/>
     Enter the query (table name is "PEOPLE"): <input type="text" name="query">
     <br/>
-    <input type="submit" name="form2" value="Query">
+    <input type="submit" name="form2" value="Query" class='btn btn-default'>
   </form>
 
-<br/><br/><br/><br/><br/>
+<br/><br/>
 
 {%if pdf is defined%}
 Query performed: {{query}}
 <br/>
-Showing only the first 50 elements for day {{day}}
-<br/><br/>
+Showing only the first 20 elements for day {{day}}:
+<br/>
 {{pdf | safe}}
-
-<iframe width="0" height="0" border="0" name="dummyframe" id="dummyframe"></iframe>
-<form action="download" method="POST" target="dummyframe">
-  <input type="hidden" name="query" value="{{query}}">
-  <input type="hidden" name="day" value="{{day}}">
-  <input type="submit" value="Download as CSV">
-</form>
+<br/>
+  <form action="download" method="POST" target="dummyframe">
+    <input type="hidden" name="query" value="{{query}}">
+    <input type="hidden" name="day" value="{{day}}">
+    <input type="submit" value="Download as CSV" class='btn btn-default'>
+  </form>
+    <iframe  style="display:none;" width="0" height="0" border="0" name="dummyframe" id="dummyframe"></iframe>
+  <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#PQ" aria-expanded="false" aria-controls="PQ">
+    Show Profile
+  </button>
+  <div class="collapse" id="PQ">
+    <div id="loader" class="loader"></div>
+    <div style="display:none;" id="report" class="animate-bottom"></div>
+  </div>
 {% endif %}
+<br/><br/><br/>
+{%if suggested is defined%}
 
-<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
-  {% if report is defined %}
-  [SHOW PROFILE]
-		{{report | safe}}
-  {% endif %}
+<script>
+function loadSuggestion(day, query, dimension) {
+  var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      document.getElementById("report".concat(dimension)).innerHTML = this.responseText;
+      showRes(dimension);
+    } };
+    xhttp.open("POST", "trySuggestion", true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send("query=".concat(query,"&day=",day,"&dimension=",dimension));
+}
+
+function showRes(dimension) {
+  document.getElementById("loader".concat(dimension)).style.display = "none";
+  document.getElementById("report".concat(dimension)).style.display = "block";
+}
+</script>
+
+Suggested queries:<br/><br/>
+Try the same query using only {{suggested[0]}} as quality dimension:
+<br/>  
+<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#{{suggested[0]}}" aria-expanded="false" aria-controls="{{suggested[0]}}" onclick="loadSuggestion('{{day}}','{{query}}','{{suggested[0]}}')"> Compute Result </button>
+  <div class="collapse" id="{{suggested[0]}}">
+    <div id="loader{{suggested[0]}}" class="loader"></div>
+    <div style="display:none;" id="report{{suggested[0]}}" class="animate-bottom"></div>
+  </div>
+<br/><br/>
+Try the the same query using only {{suggested[1]}} as quality dimension:
+<br/>  
+<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#{{suggested[1]}}" aria-expanded="false" aria-controls="{{suggested[1]}}" onclick="loadSuggestion('{{day}}','{{query}}','{{suggested[1]}}')"> Compute Result </button>
+  <div class="collapse" id="{{suggested[1]}}">
+    <div id="loader{{suggested[1]}}" class="loader"></div>
+    <div style="display:none;" id="report{{suggested[1]}}" class="animate-bottom"></div>
+  </div>
+<br/><br/>
+{%if suggested[2] is defined%}
+Try the the same query using only {{suggested[2]}} as quality dimension:
+<br/>  
+<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#{{suggested[2]}}" aria-expanded="false" aria-controls="{{suggested[2]}}" onclick="loadSuggestion('{{day}}','{{query}}','{{suggested[2]}}')"> Compute Result </button>
+  <div class="collapse" id="{{suggested[2]}}">
+    <div id="loader{{suggested[2]}}" class="loader"></div>
+    <div style="display:none;" id="report{{suggested[2]}}" class="animate-bottom"></div>
+  </div>
+<br/><br/>
+{%endif%}
+{%endif%}
 </body>
 </html>

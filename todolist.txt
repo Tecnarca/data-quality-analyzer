@@ -18,7 +18,9 @@ dataset querying:
 > send a query to spark [DONE]
 > return the result [DONE]
 > convert data result in csv [DONE]
-> function for query 'portions' of data
+> function for DIQ 'portions' of data
+> DQ attributes >= in the query form [need to understand how to load Quality attrs. as integers, then done]
+> testing [somewhat done, need more]
 
 WebUI:
 > hierarchy [DONE]
@@ -27,5 +29,6 @@ WebUI:
 > query form [DONE]
 > download CSV button [DONE]
 > query results [missing style]
-> profiling button [missing javascript]
+> profiling button [DONE]
 > compare page [DONE]
+
