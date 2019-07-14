@@ -8,7 +8,7 @@ dirtying the dataset:
 > write random letters inside CC codes [DONE]
 > create completeness [FATTO]
 >> consistency [DONE]
->>> and timeliness as columns [DONE]
+>>> and timeliness as column (if we have time)
 
 profiling the dataset:
 > take pandas-profiler [DONE]
@@ -18,7 +18,7 @@ dataset querying:
 > send a query to spark [DONE]
 > return the result [DONE]
 > convert data result in csv [DONE]
-> function for DIQ 'portions' of data
+> function for DIQ 'portions' of data [DONE]
 > DQ attributes >= in the query form [need to understand how to load Quality attrs. as integers, then done]
 > testing [somewhat done, need more]
 
@@ -31,4 +31,4 @@ WebUI:
 > query results [missing style]
 > profiling button [DONE]
 > compare page [DONE]
-
+> Presentation
