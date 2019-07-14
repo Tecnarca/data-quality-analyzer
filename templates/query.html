@@ -41,9 +41,10 @@
     </script>
 
 
-{% if pdf is defined %}
+
 <script>
 function loadProfiles() {
+  {% if pdf is defined %}
   var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
@@ -52,21 +53,43 @@ function loadProfiles() {
     } };
     xhttp.open("POST", "profileQuery", true);
     xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xhttp.send("query={{query}}&day={{day}}");
+    xhttp.send("query={{query|safe}}&day={{day}}");
+  {% endif %}
+
+  {%if suggested is defined%}
+  loadSuggestion('{{day}}','{{query|safe}}','{{suggested[0]}}');
+  loadSuggestion('{{day}}','{{query|safe}}','{{suggested[1]}}');
+  {%if suggested[2] is defined%}
+  loadSuggestion('{{day}}','{{query|safe}}','{{suggested[2]}}');
+  {% endif %}
+  {% endif %}
 }
 
 function showPage() {
   document.getElementById("loader").style.display = "none";
   document.getElementById("report").style.display = "block";
 }
+
+function showRes(dimension) {
+  document.getElementById("loader".concat(dimension)).style.display = "none";
+  document.getElementById("report".concat(dimension)).style.display = "block";
+}
+
+function loadSuggestion(day, query, dimension) {
+  var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      document.getElementById("report".concat(dimension)).innerHTML = this.responseText;
+      showRes(dimension);
+    } };
+    xhttp.open("POST", "trySuggestion", true);
+    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    xhttp.send("query=".concat(query,"&day=",day,"&dimension=",dimension));
+}
 </script>
-{% endif %}
+
 </head>
-{%if pdf is defined%}
 <body onload="loadProfiles()">
-{%else%}
-<body>
-{%endif%}
   <form action="query" method="POST">
     Select a dataset: <br/>
     
@@ -130,7 +153,7 @@ Showing only the first 20 elements for day {{day}}:
 {{pdf | safe}}
 <br/>
   <form action="download" method="POST" target="dummyframe">
-    <input type="hidden" name="query" value="{{query}}">
+    <input type="hidden" name="query" value="{{query|safe}}">
     <input type="hidden" name="day" value="{{day}}">
     <input type="submit" value="Download as CSV" class='btn btn-default'>
   </form>
@@ -146,46 +169,27 @@ Showing only the first 20 elements for day {{day}}:
 <br/><br/><br/>
 {%if suggested is defined%}
 
-<script>
-function loadSuggestion(day, query, dimension) {
-  var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-      document.getElementById("report".concat(dimension)).innerHTML = this.responseText;
-      showRes(dimension);
-    } };
-    xhttp.open("POST", "trySuggestion", true);
-    xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    xhttp.send("query=".concat(query,"&day=",day,"&dimension=",dimension));
-}
-
-function showRes(dimension) {
-  document.getElementById("loader".concat(dimension)).style.display = "none";
-  document.getElementById("report".concat(dimension)).style.display = "block";
-}
-</script>
-
 Suggested queries:<br/><br/>
 Try the same query using only {{suggested[0]}} as quality dimension:
 <br/>  
-<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#{{suggested[0]}}" aria-expanded="false" aria-controls="{{suggested[0]}}" onclick="loadSuggestion('{{day}}','{{query}}','{{suggested[0]}}')"> Compute Result </button>
+<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#{{suggested[0]}}" aria-expanded="false" aria-controls="{{suggested[0]}}"> Compute Result </button>
   <div class="collapse" id="{{suggested[0]}}">
     <div id="loader{{suggested[0]}}" class="loader"></div>
     <div style="display:none;" id="report{{suggested[0]}}" class="animate-bottom"></div>
   </div>
 <br/><br/>
-Try the the same query using only {{suggested[1]}} as quality dimension:
+Try the same query using only {{suggested[1]}} as quality dimension:
 <br/>  
-<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#{{suggested[1]}}" aria-expanded="false" aria-controls="{{suggested[1]}}" onclick="loadSuggestion('{{day}}','{{query}}','{{suggested[1]}}')"> Compute Result </button>
+<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#{{suggested[1]}}" aria-expanded="false" aria-controls="{{suggested[1]}}"> Compute Result </button>
   <div class="collapse" id="{{suggested[1]}}">
     <div id="loader{{suggested[1]}}" class="loader"></div>
     <div style="display:none;" id="report{{suggested[1]}}" class="animate-bottom"></div>
   </div>
 <br/><br/>
 {%if suggested[2] is defined%}
-Try the the same query using only {{suggested[2]}} as quality dimension:
+Try the same query using only {{suggested[2]}} as quality dimension:
 <br/>  
-<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#{{suggested[2]}}" aria-expanded="false" aria-controls="{{suggested[2]}}" onclick="loadSuggestion('{{day}}','{{query}}','{{suggested[2]}}')"> Compute Result </button>
+<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#{{suggested[2]}}" aria-expanded="false" aria-controls="{{suggested[2]}}"> Compute Result </button>
   <div class="collapse" id="{{suggested[2]}}">
     <div id="loader{{suggested[2]}}" class="loader"></div>
     <div style="display:none;" id="report{{suggested[2]}}" class="animate-bottom"></div>

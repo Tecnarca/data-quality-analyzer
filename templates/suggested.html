@@ -1,3 +1,10 @@
 <br/>QUERY PERFORMED: {{queryN | safe }}
 <br/><br/>
+  <form action="download" method="POST" target="dummyframe">
+    <input type="hidden" name="query" value="{{queryN|safe}}">
+    <input type="hidden" name="day" value="{{day}}">
+    <input type="submit" value="Download as CSV" class='btn btn-default'>
+  </form>
+    <iframe  style="display:none;" width="0" height="0" border="0" name="dummyframe" id="dummyframe"></iframe>
+<br/><br/>
 {{profile  | safe }}
