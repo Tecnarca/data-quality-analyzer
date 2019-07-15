@@ -20,7 +20,7 @@ dataset querying:
 > convert data result in csv [DONE]
 > function for DIQ 'portions' of data [DONE]
 > DQ attributes >= in the query form [DONE]
-> testing [somewhat done, need more]
+> testing
 
 WebUI:
 > hierarchy [DONE]
