@@ -15,6 +15,13 @@
   height: 40px;
   -webkit-animation: spin 2s linear infinite; /* Safari */
   animation: spin 2s linear infinite;
+  -webkit-align-content: center;
+  align-content: center;
+}
+
+.btn.btn-warning.active,
+.btn.btn-warning:active {
+  background-color: #dca556;
 }
 
 @-webkit-keyframes spin {
@@ -38,8 +45,6 @@
               $('[data-toggle="tooltip"]').tooltip()
         })
     </script>
-
-
 
 <script>
 function loadProfiles() {
@@ -86,6 +91,7 @@ function loadSuggestion(day, query, dimension) {
     xhttp.send("query=".concat(query,"&day=",day,"&dimension=",dimension));
 }
 </script>
+<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
 <nav class="navbar navbar-default">
   <div class="container-fluid">
     <div class="navbar-header">
@@ -114,7 +120,7 @@ function loadSuggestion(day, query, dimension) {
       <label class="col-sm-12 control-label" for="inputHelpBlock">
       Select date
       </label><div data-toggle="buttons">
-    {% for df in dfs %}<label class="btn btn-primary"><input type="radio" name="d" value="{{loop.index0}}">Day {{loop.index0}}</label><br><br>
+    {% for df in dfs %}<label class="btn btn-warning"><input type="radio" name="d" value="{{loop.index0}}">Day {{loop.index0}}</label><br><br>
     {% endfor %}</div>
     </div>
     <div class="col-sm-11">
@@ -230,25 +236,30 @@ Query performed: <br><label class="control-label" for="formGroupInputSmall">{{qu
 <br/><br/><br/>
 {%if suggested is defined%}
 
-Suggested queries:<br/><br/>
-Try the same query using only {{suggested[0]}} as quality dimension:
+<div style="text-align:center;"> <label class="h4">Suggested queries:<br/><br/></label></div>
+<div class="form-group form-group-sm" style="text-align:center;">
+Try the same query using only {{suggested[0]}} as quality dimension
 <br/>  
 <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#{{suggested[0]}}" aria-expanded="false" aria-controls="{{suggested[0]}}"> Compute Result </button>
-  <div class="collapse" id="{{suggested[0]}}">
+  <div class="collapse " id="{{suggested[0]}}" style="text-align:center; -webkit-align-content: center;">
     <div id="loader{{suggested[0]}}" class="loader"></div>
     <div style="display:none;" id="report{{suggested[0]}}" class="animate-bottom"></div>
   </div>
+</div>
 <br/><br/>
-Try the same query using only {{suggested[1]}} as quality dimension:
+<div class="form-group form-group-sm" style="text-align:center;">
+Try the same query using only {{suggested[1]}} as quality dimension
 <br/>  
 <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#{{suggested[1]}}" aria-expanded="false" aria-controls="{{suggested[1]}}"> Compute Result </button>
-  <div class="collapse" id="{{suggested[1]}}">
+  <div class="collapse" id="{{suggested[1]}}" style="text-align:center; -webkit-align-content: center;">
     <div id="loader{{suggested[1]}}" class="loader"></div>
     <div style="display:none;" id="report{{suggested[1]}}" class="animate-bottom"></div>
   </div>
+</div>
 <br/><br/>
 {%if suggested[2] is defined%}
-Try the same query using only {{suggested[2]}} as quality dimension:
+<div class="form-group form-group-sm" style="text-align:center; -webkit-align-content: center;">
+Try the same query using only {{suggested[2]}} as quality dimension
 <br/>  
 <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#{{suggested[2]}}" aria-expanded="false" aria-controls="{{suggested[2]}}"> Compute Result </button>
   <div class="collapse" id="{{suggested[2]}}">
@@ -256,6 +267,7 @@ Try the same query using only {{suggested[2]}} as quality dimension:
     <div style="display:none;" id="report{{suggested[2]}}" class="animate-bottom"></div>
   </div>
 <br/><br/>
+</div>
 {%endif%}
 {%endif%}
 </body>

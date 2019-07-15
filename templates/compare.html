@@ -15,6 +15,7 @@
               $('[data-toggle="tooltip"]').tooltip()
         })
     </script>
+<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
 
 <nav class="navbar navbar-default">
   <div class="container-fluid">
@@ -54,16 +55,10 @@
 	</div>
 	</div>
 	</div>
-	</form><br><br><br>
+	</form><br><br><br><br><br><br><br>
 	{% if reports is defined %}
-	<table class="container">
-		<td>
 			{{reports.profile1 | safe}}
-		</td>
-		<td>
 			{{reports.profile2 | safe}}
-		</td>
-	</table>
 	{% endif %}
 </body>
 </html>

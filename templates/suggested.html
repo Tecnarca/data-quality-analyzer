@@ -1,4 +1,4 @@
-<p style="text-align:center;">
+<br/><p style="text-align:center;">
 Query performed: <br><label class="control-label" for="formGroupInputSmall">{{queryN|safe}}</label>
 </p>
   <form action="download" method="POST" target="dummyframe">
@@ -7,5 +7,8 @@ Query performed: <br><label class="control-label" for="formGroupInputSmall">{{qu
     <p style="text-align:center;"><input type="submit" value="Download as CSV" class='btn btn-success'></p>
   </form>
     <iframe  style="display:none;" width="0" height="0" border="0" name="dummyframe" id="dummyframe"></iframe>
-<br/><br/>
+<br/>
+<div class="container" style="text-align:center;">
 {{profile  | safe }}
+</div>
+<br/><br/>

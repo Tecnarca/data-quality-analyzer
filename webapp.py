@@ -7,8 +7,10 @@ from flask import request
 from pyspark.sql.types import StructField,IntegerType, StructType,StringType
 from pyspark import SparkContext, SparkConf
 from flask import send_file
+from flask import send_from_directory
 from pyspark.sql import SparkSession
 import glob
+import os
 import re
 
 spark = SparkSession \
@@ -37,7 +39,9 @@ dfStruct=StructType(fields=dfS)
 for file_ in csvs:
 	s_df = spark.read.csv(file_,header = True,schema=dfStruct)
 	df.append(s_df)
-	p.append(spark_df_profiling.ProfileReport(s_df).rendered_html())
+	#p.append(spark_df_profiling.ProfileReport(s_df).rendered_html())
+p.append(spark_df_profiling.ProfileReport(df[0]).rendered_html())
+p.append(spark_df_profiling.ProfileReport(df[1]).rendered_html())
 print("[Start] Loaded and profiled Spark data frames")
 
 print("[Start] Starting Flask...")
@@ -175,5 +179,11 @@ def trySuggestion():
 		return render_template('suggested.html', queryN=queryN, profile=profile)
 	else:
 		return "The query did not return any rows."
+
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, 'templates'),
+                               'favicon.ico', mimetype='image/vnd.microsoft.icon')
+
 if __name__ == '__main__':
     app.run()

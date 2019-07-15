@@ -173,16 +173,18 @@
 </style>
 
 <div class="container pandas-profiling">
-    <div class="row headerrow highlight">
-        <h1>Overview</h1>
+    <div class="col-md-10">
+        <div class="row headerrow highlight">
+            <h1>Overview</h1>
+        </div>
+        {{ overview_html }}
+        <div class="row headerrow highlight">
+            <h1>Variables</h1>
+        </div>
+        {{ rows_html }}
+        <div class="row headerrow highlight">
+            <h1>Sample</h1>
+        </div>
+        {{ sample_html }}
     </div>
-    {{ overview_html }}
-    <div class="row headerrow highlight">
-        <h1>Variables</h1>
-    </div>
-    {{ rows_html }}
-    <div class="row headerrow highlight">
-        <h1>Sample</h1>
-    </div>
-    {{ sample_html }}
 </div>

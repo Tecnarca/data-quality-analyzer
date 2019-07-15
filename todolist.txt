@@ -32,6 +32,8 @@ WebUI:
 > Navbar [DONE]
 > container on query form [DONE]
 > query results restyle [DONE]
-> profiling restyle
-> restyle line 234 to 263 of query page
+> make button press on day more understandable [DONE]
+> profiling resize [DONE]
+> remove useless data from profiling report [DONE]
+> restyle line 234 to 263 of query page [DONE]
 > Presentation
