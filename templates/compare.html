@@ -15,23 +15,56 @@
               $('[data-toggle="tooltip"]').tooltip()
         })
     </script>
+
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Data Quality Analyzer</a>
+    </div>
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li><a href="query">Query</a></li>
+        <li class="active"><a href="#">Compare<span class="sr-only">(current)</span></a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
 </head>
 <body>
 	<form action="compare" method="POST">
+		<div class="form-group">
+		<div class="col-md">
+		<label class="col-sm-2 control-label" for="formGroupInputSmall">Select two days to profile and compare</label>
+		<div class="col-sm-1"> 
+			<input type="submit" value="Compare" class='btn btn-success'>
+		</div>
+		<div class="col-sm-12 btn-group btn-group-toggle" data-toggle="buttons"> <br>
 		{% for df in dfs %}
-		<input type="checkbox" name="d{{loop.index0}}" value="{{loop.index0}}">Day {{loop.index0}} 
+		<label class="btn btn-default">
+		<input type="checkbox" name="d{{loop.index0}}" value="{{loop.index0}}">Day {{loop.index0}}
+		</label> 
 		{% endfor %}
-		<input type="submit" value="Compare">
-	</form>
+	</div>
+	</div>
+	</div>
+	</form><br><br><br>
 	{% if reports is defined %}
-		<table style="width:50%">
-			<td>
-				{{reports.profile1 | safe}}
-			</td>
-			<td>
-				{{reports.profile2 | safe}}
-			</td>
-		</table>
+	<table class="container">
+		<td>
+			{{reports.profile1 | safe}}
+		</td>
+		<td>
+			{{reports.profile2 | safe}}
+		</td>
+	</table>
 	{% endif %}
 </body>
 </html>

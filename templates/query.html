@@ -17,7 +17,6 @@
   animation: spin 2s linear infinite;
 }
 
-/* Safari */
 @-webkit-keyframes spin {
   0% { -webkit-transform: rotate(0deg); }
   100% { -webkit-transform: rotate(360deg); }
@@ -87,63 +86,123 @@ function loadSuggestion(day, query, dimension) {
     xhttp.send("query=".concat(query,"&day=",day,"&dimension=",dimension));
 }
 </script>
-
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">Data Quality Analyzer</a>
+    </div>
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">Query<span class="sr-only">(current)</span></a></li>
+        <li><a href="compare">Compare</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
 </head>
+
 <body onload="loadProfiles()">
-  <form action="query" method="POST">
-    Select a dataset: <br/>
-    
-    {% for df in dfs %}
-    <input type="radio" name="d{{loop.index0}}" value="{{loop.index0}}">Day {{loop.index0}} 
-    {% endfor %}
-    <br/>
-    Seleziona gli attributi da visualizzare:<br/>
-    {% for attr in attrs%}
-    <input type="checkbox" name="s{{attr}}" value="{{attr}}">{{attr}}
-    {% endfor %}
-    <br/>
-    Restituisci solo le tuple con:<br/>
+  <form action="query" method="POST" >
+    <div class="row">
+    <div class="col-sm-1">
+      <label class="col-sm-12 control-label" for="inputHelpBlock">
+      Select date
+      </label><div data-toggle="buttons">
+    {% for df in dfs %}<label class="btn btn-primary"><input type="radio" name="d" value="{{loop.index0}}">Day {{loop.index0}}</label><br><br>
+    {% endfor %}</div>
+    </div>
+    <div class="col-sm-11">
+     <div class="form-group"> 
+      <label class="col-sm-3 control-label" for="formGroupInputSmall">
+      Select attributes to visualize:
+      </label>
+      <div class="col-sm-12 btn-group btn-group-toggle" data-toggle="buttons">
+      {% for attr in attrs%}
+      <label class="btn btn-default">
+      <input type="checkbox"  name="s{{attr}}" value="{{attr}}">{{attr}}
+      </label>
+      {% endfor %}
+    </div></div>
+    <br><br><br>
+  <div class="col-sm-12"> 
+    <label class="control-label" for="formGroupInputSmall">
+      Select only tuples with:
+      </label><br>
+      <div class="form-group form-group-sm">
     {% for attr in attrs %}
     {% if attr in ['COMPLETENESS', 'CONSISTENCY', 'CONFORMITY'] %}
-    {{attr}} >= <input type="text" name="w{{attr}}"><br/>
+    <div class="form-group form-group-sm col-sm-12">
+    <label class="col-sm-2" for="formGroupInputSmall">{{attr}}</label><div class="col-sm-4"><input type="text" class="cbn-input form-control" name="w{{attr}}" id="formGroupInputSmall" placeholder="is equal or greater than..."></div></div><br/>
     {% else %}
-    {{attr}} = <input type="text" name="w{{attr}}"><br/>
+    <div class="form-group form-group-sm col-sm-12">
+    <label class="col-sm-2" for="formGroupInputSmall">{{attr}}</label><div class="col-sm-4"><input type="text" class="cbn-input form-control" name="w{{attr}}" id="formGroupInputSmall" placeholder="is equal to..."></div></div><br/>
     {% endif %}
     {% endfor %}
-    Raggruppa per:<br/>
-    {% for attr in attrs %}
+  </div>
+    </div>
+    <div class="form-group"> 
+    <label class="col-sm-2 control-label" for="formGroupInputSmall">
+      Group by:
+      </label>
+      <div class="col-sm-12 btn-group btn-group-toggle" data-toggle="buttons">
+      {% for attr in attrs%}
+      <label class="btn btn-default">
     <input type="checkbox" name="g{{attr}}" value="{{attr}}">{{attr}}
+    </label>
     {% endfor %}
-    <br/>
-    Seleziona solo i gruppi con un numero di tuple
-    <input type="radio" name="min" value="min">minore
-    <input type="radio" name="max" value="max">maggiore
-    <input type="radio" name="eq" value="eq">uguale
-    a <input type="text" name="count">
-    sugli attributi <br/>
-    {% for attr in attrs %}
+    <br><br><br>
+    </div>
+    </div>
+    <div class="form-group"> 
+    <br><br><label class="col-sm-3 control-label" for="formGroupInputSmall">
+      Select groups with a group COUNT
+      </label>
+    <div class="col-sm-2">
+    <select class="form-control" name="op">
+      <option value=">"><</option>
+      <option value="<">></option>
+      <option value="=">=</option>
+    </select>
+  </div>
+      <div class="col-md-2"><input type="text" name="count" class="cbn-input form-control"></div>
+</div> 
+<div class="form-group col-md-12"> 
+    <label class="col-sm-3 control-label" for="formGroupInputSmall">On the attributes:</label>
+      <div class="col-sm-12 btn-group btn-group-toggle" data-toggle="buttons">
+      {% for attr in attrs%}
+      <label class="btn btn-default">
     <input type="checkbox" name="h{{attr}}" value="{{attr}}">{{attr}}
+  </label>
     {% endfor %}
-    <br/>
-    <input type="submit" name="form1" value="Query" class='btn btn-default'>
+  </div>
+    <br>
+  </div>
+    <div class="col-md-12">
+   <div class="form-group">
+   <br>  
+  <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#AO" aria-expanded="false" aria-controls="AO">
+    ADVANCED QUERY
+  </button>
+  <div class="collapse" id="AO">
+    <br>Enter a custom query (table name is PEOPLE) <br><textarea name="query" class="form-control" rows="3" placeholder="SELECT * FROM PEOPLE LIMIT 10"></textarea><br>
+  </div>
+  <input type="submit" name="form1" value="Query" class='btn btn-success'>
+</div>
+</div>
+</div>
+</div>
   </form>
-  
-  <br/><br/>
 
-  [ADVANCED OPTION] Build a custom query<br/>
-    <form action="query" method="POST">
-    Select a dataset:
-    
-    {% for df in dfs %}
-    <input type="radio" name="d{{loop.index0}}" value="{{loop.index0}}">Day {{loop.index0}} 
-    {% endfor %}
-    <br/>
-    Enter the query (table name is "PEOPLE"): <input type="text" name="query">
-    <br/>
-    <input type="submit" name="form2" value="Query" class='btn btn-default'>
-  </form>
 
-<br/><br/>
+
+
 
 {%if pdf is defined%}
 Query performed: {{query}}
