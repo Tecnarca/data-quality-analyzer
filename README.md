@@ -18,6 +18,10 @@ To start the webapp that contains the Data Quality Analyzer, simply run:
 ```
 python webapp.py
 ```
+Note: This command will also run a flask server on port 5000. To access it, open on your browser the page:
+```
+http://localhost:5000
+```
 
 ## Built with
 * [Java 9](https://www.oracle.com/java/java9.html)
