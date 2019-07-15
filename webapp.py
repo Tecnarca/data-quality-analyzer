@@ -37,10 +37,7 @@ dfStruct=StructType(fields=dfS)
 for file_ in csvs:
 	s_df = spark.read.csv(file_,header = True,schema=dfStruct)
 	df.append(s_df)
-	#p.append(spark_df_profiling.ProfileReport(s_df).rendered_html())
-#developing profiling, remove in release
-#p.append(spark_df_profiling.ProfileReport(df[0]).rendered_html())
-#p.append(spark_df_profiling.ProfileReport(df[1]).rendered_html())
+	p.append(spark_df_profiling.ProfileReport(s_df).rendered_html())
 print("[Start] Loaded and profiled Spark data frames")
 
 print("[Start] Starting Flask...")
@@ -49,7 +46,6 @@ print("[Start] Started Flask")
 
 print("------------------------------")
 
-######CAMBIARE A >= QUANDO CORRETTO L'ERRORE DI PYSPARK!
 def qualityAttrs(query):
 	suggested = []
 	if re.search("(WHERE)*COMPLETENESS[ *]*>?[ *]*=[ *]*", query):
