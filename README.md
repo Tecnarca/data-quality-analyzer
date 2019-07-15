@@ -20,7 +20,7 @@ python webapp.py
 ```
 Note: This command will also run a flask server on port 5000. To access it, open on your browser the page:
 ```
-http://localhost:5000
+http://localhost:5000/query
 ```
 
 ## Built with
