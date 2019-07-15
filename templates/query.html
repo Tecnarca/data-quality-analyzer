@@ -199,24 +199,26 @@ function loadSuggestion(day, query, dimension) {
 </div>
 </div>
   </form>
-
-
-
-
-
+<br/><br/>
 {%if pdf is defined%}
-Query performed: {{query}}
-<br/>
-Showing only the first 20 elements for day {{day}}:
-<br/>
-{{pdf | safe}}
+<p style="text-align:center;">
+Query performed: <br><label class="control-label" for="formGroupInputSmall">{{query}}</label>
 <br/>
   <form action="download" method="POST" target="dummyframe">
     <input type="hidden" name="query" value="{{query|safe}}">
     <input type="hidden" name="day" value="{{day}}">
-    <input type="submit" value="Download as CSV" class='btn btn-default'>
+    <p style="text-align:center;"><input type="submit" value="Download as CSV" class='btn btn-success'></p>
   </form>
     <iframe  style="display:none;" width="0" height="0" border="0" name="dummyframe" id="dummyframe"></iframe>
+
+<p style="text-align:center;">Showing only the first 20 elements for day {{day}}:
+<br/>
+</p>
+<div class="table-responsive col-md-12">
+{{pdf | safe}}
+</div>
+<br/>
+<div>
   <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#PQ" aria-expanded="false" aria-controls="PQ">
     Show Profile
   </button>
@@ -224,6 +226,7 @@ Showing only the first 20 elements for day {{day}}:
     <div id="loader" class="loader"></div>
     <div style="display:none;" id="report" class="animate-bottom"></div>
   </div>
+</div>
 {% endif %}
 <br/><br/><br/>
 {%if suggested is defined%}

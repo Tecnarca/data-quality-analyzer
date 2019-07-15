@@ -31,6 +31,7 @@ WebUI:
 > compare page [DONE]
 > Navbar [DONE]
 > container on query form [DONE]
-> query results
+> query results restyle
 > profiling restyle (sideways shrink especially)
+> restyle line 234 to 263 of query page
 > Presentation

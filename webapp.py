@@ -144,7 +144,7 @@ def query():
 						return "ERROR building the query: " + query
 			print(query)
 			sqlDF = spark.sql(query)
-			pdf = sqlDF.toPandas().head(20).to_html(classes='table-responsive')
+			pdf = sqlDF.toPandas().head(20).to_html(classes='table')
 			if len(suggested) > 1:
 				return render_template('query.html', dfs=df, attrs=df[0].columns, pdf=pdf, query=query, day=c[0], suggested=suggested)
 			else:

@@ -1,9 +1,10 @@
-<br/>QUERY PERFORMED: {{queryN | safe }}
-<br/><br/>
+<p style="text-align:center;">
+Query performed: <br><label class="control-label" for="formGroupInputSmall">{{queryN|safe}}</label>
+</p>
   <form action="download" method="POST" target="dummyframe">
     <input type="hidden" name="query" value="{{queryN|safe}}">
     <input type="hidden" name="day" value="{{day}}">
-    <input type="submit" value="Download as CSV" class='btn btn-default'>
+    <p style="text-align:center;"><input type="submit" value="Download as CSV" class='btn btn-success'></p>
   </form>
     <iframe  style="display:none;" width="0" height="0" border="0" name="dummyframe" id="dummyframe"></iframe>
 <br/><br/>
