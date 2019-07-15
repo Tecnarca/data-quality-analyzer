@@ -6,7 +6,7 @@ dirtying the dataset:
 > and write wrong line codes or line names [DONE]
 > create dict of veichles codes and write inexistent vehicles codes[DONE]
 > write random letters inside CC codes [DONE]
-> create completeness [FATTO]
+> create completeness [DONE]
 >> consistency [DONE]
 >>> and timeliness as column (if we have time)
 
@@ -24,7 +24,7 @@ dataset querying:
 
 WebUI:
 > hierarchy [DONE]
-> dataset list on the page side [done]
+> dataset list on the page side [DONE]
 > query form [DONE]
 > download CSV button [DONE]
 > profiling button [DONE]
